@@ -7,7 +7,7 @@
     "prettier-format-build-server": "prettier --config .prettierrc 'build-server/**/*.js' --write"
   },
   "keywords": [],
-  "author": "",
+  "author": "Aneesh Srivastava",
   "license": "ISC",
   "devDependencies": {
     "prettier": "^3.2.5"
