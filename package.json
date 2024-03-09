@@ -4,7 +4,8 @@
   "description": "This project is low level clone of vercel platform. Aimed at being scalable and secure, this iterates over another repo of mine (named 'vercel-project')",
   "main": "index.js",
   "scripts": {
-    "prettier-format-build-server": "prettier --config .prettierrc 'build-server/**/*.js' --write"
+    "prettier-format": "prettier --config .prettierrc '**/*.js' --write",
+    "start-build-server": "export $(cat .env)"
   },
   "keywords": [],
   "author": "Aneesh Srivastava",
