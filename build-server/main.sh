@@ -1,7 +1,9 @@
-#!/bin/bash
+#!/bin/dash
 
-export GIT_REPOSOTRY_URL="$GIT_RESPOSITORY_URL"
+export GIT_REPOSITORY_URL="$GIT_REPOSITORY_URL"
 
-git clone "$GIT_REPOSITORY_URL" /home/app/ouput
+echo "Repo URL is: $GIT_REPOSITORY_URL"
 
-exec node script.js
+git clone "$GIT_REPOSITORY_URL" /home/app/output
+
+pm2 start script.js --name myapp --no-daemon

@@ -1,3 +1,5 @@
-export const s3OutputDirName = '__output';
-export const s3BucketName = 'vercel-clone-public';
-export const s3BucketRegion = 'ap-south-1';
+module.exports = {
+    s3OutputDirName: '__output',
+    s3BucketName: 'vercel-clone-public',
+    s3BucketRegion: 'ap-south-1'
+};

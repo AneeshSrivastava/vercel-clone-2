@@ -3,8 +3,9 @@ const { exec } = require('child_process');
 const fs = require('fs');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const mime = require('mime-types');
+require('dotenv').config();
 
-import { s3OutputDirName, s3BucketName, s3BucketRegion } from './config';
+const { s3OutputDirName, s3BucketName, s3BucketRegion } = require('./config');
 
 const s3Client = new S3Client({
     region: s3BucketRegion,
@@ -21,8 +22,9 @@ async function init() {
     p.stdout.on('data', function (data) {
         console.log(data.toString());
     });
+
     p.stdout.on('error', function (data) {
-        console.log('Error:', data.toString());
+        console.log('Error', data.toString());
     });
     p.on('close', async function () {
         console.log('Build completed');
@@ -30,21 +32,22 @@ async function init() {
         const distFolderContents = fs.readdirSync(distFolderPath, {
             recursive: true
         });
-
-        for (const filePath of distFolderContents) {
+        for (const file of distFolderContents) {
+            console.log('file: ', file);
+            const filePath = path.join(distFolderPath, file);
             if (fs.lstatSync(filePath).isDirectory()) continue;
-            console.log('Uploading: ', filePath)
+            console.log('Uploading: ', filePath);
             const command = new PutObjectCommand({
                 Bucket: s3BucketName,
-                Key: `${path.join(s3OutputDirName, PROJECT_ID, filePath)}`,
+                Key: `${path.join(s3OutputDirName, PROJECT_ID, file)}`,
                 Body: fs.createReadStream(filePath),
                 ContentType: mime.lookup(filePath)
             });
             await s3Client.send(command);
-            console.log('Uploaded: ', filePath)
+            console.log('Uploaded: ', filePath);
         }
         console.log('Done...');
     });
 }
 
-init()
+init();
